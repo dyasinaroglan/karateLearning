@@ -8,8 +8,8 @@ Feature: Articles
     Then status 200
     * def token = response.user.token
 
+    @ignore
   Scenario: Create a new article
-
     Given header Authorization = 'Token ' + token
     Given path 'articles'
     And request {"article": {"tagList": [],"title": "abcşampiyon2789","description": "bbb","body": "test"}}
@@ -24,4 +24,7 @@ Feature: Articles
     # $ | not equal (STRING:STRING)
     # 'abcşampiyon2789'
     # 'abcşampiyon278' hatası alırız.
+
+  #  @ignore etiketi o testi görmezden geldiğimizi gösteririz. belirli bir test senaryosunun çalıştırılmasını engellemek için kullanılır.
+  #  Bu, belirli testlerin geçici olarak devre dışı bırakılması gerektiğinde özellikle yararlıdır.
 

@@ -32,3 +32,11 @@ Feature: Tests for the home page
     # And match response.tags !contains 'truck'  ----> And match: Bu, önceki adımlara ek bir doğrulama adımı olduğunu belirtir. response.tags: Bu, API yanıtının tags adlı alanına işaret eder. !contains 'truck': Bu ifade, tags alanının içinde 'truck' değerinin bulunmadığını doğrular
     # And match response.tags == "#array" ----> API yanıtında tags alanının bir dizi (array) olduğunu kontrol eder.
     # And match each response.tags == "#string" ----> her bir ögenin string olup olmadığını test eder
+
+  # @Karate.Test  @debug
+  #    Karate testTags() {
+  #        return Karate.run("").tags("@debug");
+  #    } Bu ifade, sadece @debug etiketi ile işaretlenmiş olan test senaryolarını çalıştırır.
+  #    Yani, test dosyalarınızda @debug etiketi ile belirtilmiş senaryolar varsa, sadece bu senaryolar çalıştırılır.
+
+   #  mvn test -Dkarate.options="--tags @debug"
