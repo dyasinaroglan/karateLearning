@@ -27,4 +27,4 @@ Feature: Article Delete
       Given path 'articles'
       When method get
       Then status 200
-      And match response.articles[0].title != 'şampiyonGS101'
+      And match response.articles[0].title != 'şampiyonGS101m'

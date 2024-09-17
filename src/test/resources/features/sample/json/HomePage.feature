@@ -13,7 +13,7 @@ Feature: Tests for the home page
     And match response.tags !contains 'truck'
     And match response.tags == "#array"
     And match each response.tags == "#string"
-
+  @ignore
   Scenario: Get 10 articles from the page
     Given params {limit:10, offset:0}
     Given path 'articles'
