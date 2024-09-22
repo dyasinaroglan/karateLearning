@@ -1,7 +1,7 @@
 Feature: login olma, makale oluşturma ve makale silme
 
   Background:
-    Given url 'https://conduit-api.bondaracademy.com/api/'
+    Given url apiUrl
     Given path 'users/login'
     And request {"user": {"email": "karate100@test.com","password": "Karate"}}
     When method Post

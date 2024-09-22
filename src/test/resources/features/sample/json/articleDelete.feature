@@ -1,13 +1,12 @@
 Feature: Article Delete
 
   Background:
-    Given url 'https://conduit-api.bondaracademy.com/api/'
+    Given url apiUrl
     Given path 'users/login'
     And request {"user": {"email": "karate100@test.com","password": "Karate"}}
     When method Post
     Then status 200
     * def token = response.user.token
-
 
     Scenario: Create Article
       Given header Authorization = 'Token ' + token

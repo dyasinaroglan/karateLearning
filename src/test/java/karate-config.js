@@ -5,15 +5,20 @@ function fn() {
     env = 'dev';
   }
   var config = {
-    env: env,
-    getUri: 'https://jsonplaceholder.typicode.com/todos',
-    postUri: 'https://reqres.in/api'
+
+    apiUrl: 'https://conduit-api.bondaracademy.com/api/'
+
   }
   if (env == 'dev') {
-    // customize
-    // e.g. config.foo = 'bar';
-  } else if (env == 'e2e') {
-    // customize
+    config.userEmail = 'karate100@test.com'
+    config.userPassword = 'Karate'
+
   }
+  else if (env == 'qa') {
+
+  }
+  var accessToken = karate.callSingle('classpath:helpers/CreateToken.feature', config).authToken
+  karate.configure('headers',{Authorization: 'Token ' + accessToken})
+
   return config;
 }
