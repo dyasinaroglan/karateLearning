@@ -6,7 +6,7 @@ Feature: Enviroment Veriables
     * def token = tokenResponse.authToken
 
   Scenario: Enviroment Veriables
-    Given header Authorization = 'Token ' + token
+    #Given header Authorization = 'Token ' + token
     Given path 'articles'
     And request {"article": {"tagList": [],"title": "article8","description": "bbb8","body": "testt8"}}
     When method Post
