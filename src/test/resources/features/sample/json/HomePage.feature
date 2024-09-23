@@ -11,18 +11,47 @@ Feature: Tests for the home page
     # And match response.tags contains 'Zoom'
     And match response.tags contains ['Zoom', 'Coding']
     And match response.tags !contains 'truck'
+    And match response.tags contains any ['fish','dog','SIDA']
+    And match response.tags contains only ['dragons']
     And match response.tags == "#array"
+    # bu yanıt metninin bir diziye eşit olduğunu söyler - Fuzzy matching - Gerçek değerinin ne olduğu umrumuzda değil. array mi? string mi? boolean mı?
     And match each response.tags == "#string"
-  @ignore
+
   Scenario: Get 10 articles from the page
+
+    * def timeValidator = read('classpath:helpers/timeValidator.js')
+
     Given params {limit:10, offset:0}
     Given path 'articles'
     When method Get
     Then status 200
-  And match response.articles ==  '#[10]'
+    And match response.articles ==  '#[10]'
     # Bu ifade, response.articles alanının tam olarak 10 öğe içeren bir dizi (array) olduğunu doğrular.
-  And match response.articlesCount == 10
-  # '10' olarak yazsaydım dize olarak 10 beklemiş olacaktım ve hata alacaktım, ancak gerçek sayı olarak 10'dur.
+    And match response.articlesCount == 32
+    # '10' olarak yazsaydım dize olarak 10 beklemiş olacaktım ve hata alacaktım, ancak gerçek sayı olarak 10'dur
+    And match response.articlesCount != 100
+  # 100' e eşit olmadığını gösterir
+    And match response == {"articles": "#array", "articlesCount": 32}
+    And match response.articles[0].createdAt contains '2024'
+    And match response.articles[*].favoritesCount contains 0
+  # burada * yaparak tüm articles içindeki makaleleri kontrol ediyor
+
+    And match response.articles[*].author.bio contains null
+  # bio'lardan en az birinin null olduğunu doğrulama
+
+    And match each response..following == false
+
+    And match each response..following == '#boolean'
+  # following key'i bize boolean bir değer döndürür.   Fuzzy matching   Bu sadece user.profile.bio alanını kontrol eder. Ancak .. operatörü ile JSON'da her yerdeki bio alanlarını kontrol edebilirsiniz:
+
+    And match each response..favoritesCount == '#number'
+
+    And match each response..bio == '##string'
+  # dönen metnin string veya null olduğunu doğrular. bu iki değerden biri kabul edilebilir. 2 tane # işareti koyduğumuzda kabul edilebilir değerin null veya string olduğu anlamına gelir.Feature:
+
+
+
+
 
     # parametre : Given param offset = 0, Given param limit = 10 === Given params {limit:10, offset:0}
     # ?limit=10&offset=0    === Given params {limit:10, offset:0}
@@ -40,3 +69,31 @@ Feature: Tests for the home page
   #    Yani, test dosyalarınızda @debug etiketi ile belirtilmiş senaryolar varsa, sadece bu senaryolar çalıştırılır.
 
    #  mvn test -Dkarate.options="--tags @debug"
+
+
+     # And match response.tags contains any ['fish','dog','SIDA'] -----> Bu üç değerden herhangi birinin o dizinin içinde olduğunun kontrolü
+     # And match response.tags contains only ['dragons']  -----> sadece sağlanan yazılan belirli değerin bu dizinin bir parçası olduğunu test eder.
+
+
+    And match each response.articles ==
+    """
+    {
+            "slug": "#string",
+            "title": "#string",
+            "description": "#string",
+            "body": "#string",
+            "tagList": '#array',
+            "createdAt": "#? timeValidator(_)",
+            "updatedAt": "#? timeValidator(_)",
+            "favorited": '#boolean',
+            "favoritesCount": '#number',
+            "author": {
+                "username": "#string",
+                "bio": '##string',
+                "image": "#string",
+                "following": '#boolean'
+            }
+        }
+    """
+
+  # Schema Validation konusu üstteki
