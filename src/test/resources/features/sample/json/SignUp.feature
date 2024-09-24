@@ -1,11 +1,15 @@
 Feature: Sign up new user
 
   Background: Preconditions
+    * def dataGenerator = Java.type('helpers.DataGenerator')
+    * def timeValidator = read('classpath:helpers/timeValidator.js')
     Given url apiUrl
 
   Scenario: new user
 
-    Given def userData = {"email": "karateeTest1234ab@testinium.com", "username": "yasinKarate1v22"}
+    * def randomEmail = dataGenerator.getRandomEmail()
+    * def randomUsername = dataGenerator.getRandomUserName()
+
     Given path 'users'
     And request {"user": {"email": #('Test' + userData.email),"password" : "Karate1287","username": #('User' + userData.username)}}
     When method Post
@@ -39,18 +43,33 @@ Feature: Sign up new user
 
   Scenario: new user1
 
-    Given def userData = {"email": "karateeTest1234567ab@testinium.com", "username": "yasinKarate1v22678"}
+    * def randomEmail = dataGenerator.getRandomEmail()
+    * def randomUsername = dataGenerator.getRandomUserName()
+
     Given path 'users'
     And request
     """
          {
            "user": {
-                  "email": #(userData.email),
+                  "email": #(randomEmail),
                   "password" : "Yasin123",
-                  "username": #(userData.username)
+                  "username": #(randomUsername)
                    }
          }
     """
     When method Post
     Then status 201
+    And match response ==
+    """
+    {
+    "user": {
+        "id": #number,
+        "email": #(randomEmail),
+        "username": #(randomUsername),
+        "bio": null,
+        "image": "https://conduit-api.bondaracademy.com/images/smiley-cyrus.jpeg",
+        "token": #string
+    }
+}
+    """
 
