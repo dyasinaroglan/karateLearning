@@ -7,7 +7,7 @@ public class _12Ders {
 
     pom.xml'e fake test datası oluşturmak için bu dependency'yi ekledik
     oluşturduğumuz java class'ında fake e-posta ve kullanıcı adı metodu yazdık
-    SignUp.feature geldik * def dataGenerator = Java.type('helpers.DataGenerator') ile okuduk
+    SignUpfeature geldik * def dataGenerator = Java.type('helpers.DataGenerator') ile okuduk
 
     * def randomEmail = dataGenerator.getRandomEmail()
     * def randomUsername = dataGenerator.getRandomUserName()

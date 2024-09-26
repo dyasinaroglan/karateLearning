@@ -7,7 +7,7 @@ public class _7Ders {
     """
          CreateToken.feature dosyasında token oluşturma işlemini tek bir yerde tanımladınız.
          Bu sayede token oluşturma işlemini her test için tekrar tekrar yazmaktan kurtuldunuz.
-         Articles.feature dosyasında, CreateToken.feature dosyasını call komutu ile çağırarak token'ı aldınız
+         articlesfeature dosyasında, CreateToken.feature dosyasını call komutu ile çağırarak token'ı aldınız
          ve bu token'ı yetkilendirme için kullanarak yeni bir makale oluşturma isteği yaptınız.
 
 
